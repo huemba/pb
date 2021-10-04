@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<x-pb-label for="Home" :value="__('Home')" class="pb" aaa="ccc" />
 
-<h1>Home</h1>
 @endsection
 
 @section('inline_js')
