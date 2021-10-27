@@ -26,7 +26,7 @@
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">description</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">brand</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subcategory</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">enabled</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">published status</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">product options</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Edit/Delete</th>
             </tr>
@@ -39,7 +39,7 @@
                     <td class="px-6 py-4 whitespace-nowrap">{{ $product->description }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ @$product->brand->name }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ @$product->subcategory->name }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ $product->enabled ? "True" : "False" }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ $product->publish_status_name() }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div>
                             @foreach ($product->product_options as $product_option)
@@ -51,8 +51,8 @@
                             @endforeach                                                   
                         </div>
                     </td>
-                    <td>
-                        <p class="px-6 py-4 whitespace-nowrap">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <p class="py-3">
                             <a href="{{ route('controls.products.edit', $product) }}">
                                 <x-button type='button' class="bg-yellow-300 hover:bg-yellow-500">
                                     Edit
@@ -63,9 +63,9 @@
                             <form method="POST" action="{{ route('controls.products.destroy', $product) }}">                            
                                 @csrf
                                 @method('DELETE')
-                                <x-button type='submit' class="bg-red-500 hover:bg-red-700">
-                                    Delete
-                                </x-button>
+                                <button type='submit' class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 bg-red-500 hover:bg-red-700"   {{ ($product->is_draft() ? '' : 'disabled') }}>
+                                     Delete
+                                </button>
                             </form>
                         </p>
                     </td>

@@ -1,15 +1,14 @@
-const imageUploader = (className) =>{
-    const containers = document.querySelectorAll(`.${className}`)
+const imageUploader = (containers) => {    
     for (const container of containers){
         const input = container.querySelector('input[type=file]')
-        input.addEventListener('change', function(e){
+        input.addEventListener('change', function(e) {
             readURL(e.target)
         })
 
-        const img = document.querySelector('img')
+        const img = container.querySelector('img')
         const oldSrc = img.getAttribute('src');
         function readURL(input){
-            if(input.files && input.files[0]){
+            if(input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     img.setAttribute('src', e.target.result);

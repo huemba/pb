@@ -41,7 +41,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                        <label class="block text-sm font-medium text-gray-700">Description</label>
                         <textarea name="description" id="description" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">{{ $product->description }}</textarea>
                     </div>
                     <div class="mb-3">
@@ -64,24 +64,22 @@
                     </div>
                     <fieldset class="mb-3">
                         <div>
-                            <legend class="text-base font-medium text-gray-900">Enabled</legend>
+                            <legend class="text-base font-medium text-gray-900">Published status</legend>
                         </div>
                         <div class="mt-4 space-y-4">
-                            <div class="flex items-center">
-                            <input id="push_everything" name="enabled" type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"  value='1' {{ ($product->enabled ? "checked" : "") }} >
-                            <label for="push_everything" class="ml-3 block text-sm font-medium text-gray-700">
-                            Enable
-                            </label>
-                            </div>
-                            <div class="flex items-center">
-                            <input id="push_email" name="enabled" type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" value='0'  {{ ($product->enabled ? "" : "checked") }}>
-                            <label for="push_email" class="ml-3 block text-sm font-medium text-gray-700">
-                            Disable
-                            </label>
-                            </div>
+                            @foreach ($published_statuses as $index => $published_status)
+                            <div  class="flex items-center">
+                                <input id="published_status_{{ $index }}" name="published_status" type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" value='{{ $index }}' {{ ($index == $published_status) ? "checked" : "" }}>
+                                <label for="published_status_{{ $index }}" class="ml-3 block text-sm font-medium text-gray-700">
+                                    {{ ucfirst($published_status)  }}
+                                </label>
+                            </div>                          
+                         @endforeach                             
                         </div>
                     </fieldset>
                 </div>
+                <hr/>
+                @include('controls/products/options/itemList', ['product_options'=> $product->product_options])
                 <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
                     <x-button class="ml-3">
                         {{ __('Submit') }}
@@ -108,6 +106,7 @@
         }
     </style>
     <script>
-        imageUploader('product_image_preview')
+        const product_image_previews = document.querySelectorAll('.product_image_preview')
+        imageUploader(product_image_preview)
     </script>
 @endsection

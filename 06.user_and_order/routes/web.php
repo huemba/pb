@@ -30,6 +30,14 @@ use App\Http\Controllers\Controls\SubcategoryController as ControlsSubcategoryCo
 
 Route::get('/', [PageController::class, 'home']);
 
+Route::resource('products', ProductController::class)->only(['index','show']);
+
+Route::prefix('cart')->name('cart.')->group(function(){
+    Route::get('/', [CartController::class, 'index'])->name('index');
+    Route::post('/addToCart', [CartController::class, 'addToCart'])->name('addToCart');
+    Route::delete('/deleteCartItem', [CartController::class, 'deleteCartItem'])->name('deleteCartItem');
+    Route::patch('/updateCartItems', [CartController::class, 'updateCartItems'])->name('updateCartItems');
+});
 /*
 |--------------------------------------------------------------------------
 | Web Routes
